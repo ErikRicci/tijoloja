@@ -18,7 +18,7 @@
     }
 
     .fixed_button {
-        position: absolute;
+        position: fixed;
         bottom: 5px;
         right: 5px;
         width: 50px;
@@ -35,10 +35,18 @@
 
     {{-- NavBar --}}
     <ul class="nav justify-content-end no-bg p-4">
-        <div class="nav-item">
-            <a class="navbar-brand text-white" href="#">registrar-se</a>
-            <a class="navbar-brand text-white" href="#">entrar</a>
-        </div>
+        {{-- Futuramente, tentar fazer um sistema básico de login --}}
+        @if (1 == 1)
+            <div class="nav-item">
+                <a class="navbar-brand text-white" href="#">registrar-se</a>
+                <a class="navbar-brand text-white" href="#">entrar</a>
+            </div>
+        @else
+            <div class="nav-item">
+                <a class="navbar-brand text-white" href="#">minha conta</a>
+                <a class="navbar-brand text-danger" href="#">sair</a>
+            </div>
+        @endif
     </ul>
     <div class="container-fluid">
         <div class="row header pt-3">
@@ -52,56 +60,70 @@
         </div>
     </div>
     <div class="container-fluid">
-        <div class="row mt-2">
-            <div class="col-sm">
-                <a href="">
-                    <img class="img-fluid" src="https://static.wikia.nocookie.net/naruto/images/3/33/Naruto_Uzumaki_%28Parte_I_-_HD%29.png/revision/latest?cb=20160316113315&path-prefix=pt-br" alt="">
-                </a>
-            </div>
-            <div class="col-sm">
-                <a href="">
-                    <img class="img-fluid" src="https://static.wikia.nocookie.net/naruto/images/3/33/Naruto_Uzumaki_%28Parte_I_-_HD%29.png/revision/latest?cb=20160316113315&path-prefix=pt-br" alt="">
-                </a>
-            </div>
-            <div class="col-sm">
-                <a href="">
-                    <img class="img-fluid" src="https://static.wikia.nocookie.net/naruto/images/3/33/Naruto_Uzumaki_%28Parte_I_-_HD%29.png/revision/latest?cb=20160316113315&path-prefix=pt-br" alt="">
-                </a>
-            </div>
-            <div class="col-sm">
-                <a href="">
-                    <img class="img-fluid" src="https://static.wikia.nocookie.net/naruto/images/3/33/Naruto_Uzumaki_%28Parte_I_-_HD%29.png/revision/latest?cb=20160316113315&path-prefix=pt-br" alt="">
-                </a>
-            </div>
-            <div class="col-sm">
-                <a href="">
-                    <img class="img-fluid" src="https://static.wikia.nocookie.net/naruto/images/3/33/Naruto_Uzumaki_%28Parte_I_-_HD%29.png/revision/latest?cb=20160316113315&path-prefix=pt-br" alt="">
-                </a>
-            </div>
-            <div class="col-sm">
-                <a href="">
-                    <img class="img-fluid" src="https://static.wikia.nocookie.net/naruto/images/3/33/Naruto_Uzumaki_%28Parte_I_-_HD%29.png/revision/latest?cb=20160316113315&path-prefix=pt-br" alt="">
-                </a>
-            </div>
+        <div class="row mt-2 mx-4">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">código</th>
+                    <th scope="col">nome</th>
+                    <th scope="col">descrição</th>
+                    <th scope="col">qtd. estoque</th>
+                    <th scope="col">preço</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    @foreach ($materials as $material)
+                        <tr>
+                            <th scope="row">{{ $material->id }}</th>
+                            <td>{{ $material->name }}</td>
+                            <td>{{ $material->description }}</td>
+                            <td>{{ $material->qty }}</td>
+                            <td>{{ $material->price }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+              </table>
         </div>
     </div>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Adicionar um novo material</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="api/material" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-floating mb-3">
+                            <input required type="text" class="form-control" placeholder="placeholder" id="floatingName" name="name">
+                            <label for="floatingName">Nome do material</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input required type="text" class="form-control" placeholder="placeholder" id="floatingBrand" name="brand">
+                            <label for="floatingBrand">Marca do material</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea required class="form-control" placeholder="placeholder" id="floatingDesc" name="description" style="height: 100px"></textarea>
+                            <label for="floatingDesc">Descrição do material...</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input required type="number" class="form-control" placeholder="placeholder" id="floatingQty" name="qty">
+                            <label for="floatingQty">Quantidade do material no estoque</label>
+                        </div>
+                        <div class="form-floating">
+                            <input required type="number" class="form-control" placeholder="placeholder" id="floatingPrice" name="price">
+                            <label for="floatingPrice">Preço unitário do material</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-warning text-white">Adicionar</button>
+                    </div>
+                </form>
             </div>
-            <div class="modal-body">
-            ...
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
         </div>
     </div>
 
