@@ -89,38 +89,41 @@
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Adicionar um novo material</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Adicionar um novo material</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <form action="api/material" method="post">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-floating mb-3">
+                            <input required type="text" class="form-control" placeholder="placeholder" id="floatingName" name="name">
+                            <label for="floatingName">Nome do material</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input required type="text" class="form-control" placeholder="placeholder" id="floatingBrand" name="brand">
+                            <label for="floatingBrand">Marca do material</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <textarea required class="form-control" placeholder="placeholder" id="floatingDesc" name="description" style="height: 100px"></textarea>
+                            <label for="floatingDesc">Descrição do material...</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input required type="number" class="form-control" placeholder="placeholder" id="floatingQty" name="qty">
+                            <label for="floatingQty">Quantidade do material no estoque</label>
+                        </div>
+                        <div class="form-floating">
+                            <input required type="number" class="form-control" placeholder="placeholder" id="floatingPrice" name="price">
+                            <label for="floatingPrice">Preço unitário do material</label>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" class="btn btn-warning text-white">Adicionar</button>
+                    </div>
+                </form>
             </div>
-            <div class="modal-body">
-                <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                    <label for="floatingInput">Nome</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                    <label for="floatingPassword">Marca</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-                    <label for="floatingTextarea2">Descrição do material...</label>
-                </div>
-                <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                    <label for="floatingInput">Quantidade</label>
-                </div>
-                <div class="form-floating">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                    <label for="floatingInput">Preço</label>
-                </div>
-            </div>
-            <div class="modal-footer">
-            <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Cancelar</button>
-            <button type="button" class="btn btn-warning text-white">Adicionar</button>
-            </div>
-        </div>
         </div>
     </div>
 

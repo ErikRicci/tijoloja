@@ -25,7 +25,10 @@ class MaterialController extends Controller
      */
     public function store(Request $request)
     {
-        return Material::create($request->all());
+        Material::create($request->all());
+        return redirect()->route('home', [
+            'materials' => Material::all()
+        ]);
     }
 
     /**
