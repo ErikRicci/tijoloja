@@ -18,7 +18,7 @@
     }
 
     .fixed_button {
-        position: absolute;
+        position: fixed;
         bottom: 5px;
         right: 5px;
         width: 50px;
@@ -35,10 +35,18 @@
 
     {{-- NavBar --}}
     <ul class="nav justify-content-end no-bg p-4">
-        <div class="nav-item">
-            <a class="navbar-brand text-white" href="#">registrar-se</a>
-            <a class="navbar-brand text-white" href="#">entrar</a>
-        </div>
+        {{-- Futuramente, tentar fazer um sistema básico de login --}}
+        @if (1 == 1)
+            <div class="nav-item">
+                <a class="navbar-brand text-white" href="#">registrar-se</a>
+                <a class="navbar-brand text-white" href="#">entrar</a>
+            </div>
+        @else
+            <div class="nav-item">
+                <a class="navbar-brand text-white" href="#">minha conta</a>
+                <a class="navbar-brand text-danger" href="#">sair</a>
+            </div>
+        @endif
     </ul>
     <div class="container-fluid">
         <div class="row header pt-3">
@@ -52,37 +60,29 @@
         </div>
     </div>
     <div class="container-fluid">
-        <div class="row mt-2">
-            <div class="col-sm">
-                <a href="">
-                    <img class="img-fluid" src="https://static.wikia.nocookie.net/naruto/images/3/33/Naruto_Uzumaki_%28Parte_I_-_HD%29.png/revision/latest?cb=20160316113315&path-prefix=pt-br" alt="">
-                </a>
-            </div>
-            <div class="col-sm">
-                <a href="">
-                    <img class="img-fluid" src="https://static.wikia.nocookie.net/naruto/images/3/33/Naruto_Uzumaki_%28Parte_I_-_HD%29.png/revision/latest?cb=20160316113315&path-prefix=pt-br" alt="">
-                </a>
-            </div>
-            <div class="col-sm">
-                <a href="">
-                    <img class="img-fluid" src="https://static.wikia.nocookie.net/naruto/images/3/33/Naruto_Uzumaki_%28Parte_I_-_HD%29.png/revision/latest?cb=20160316113315&path-prefix=pt-br" alt="">
-                </a>
-            </div>
-            <div class="col-sm">
-                <a href="">
-                    <img class="img-fluid" src="https://static.wikia.nocookie.net/naruto/images/3/33/Naruto_Uzumaki_%28Parte_I_-_HD%29.png/revision/latest?cb=20160316113315&path-prefix=pt-br" alt="">
-                </a>
-            </div>
-            <div class="col-sm">
-                <a href="">
-                    <img class="img-fluid" src="https://static.wikia.nocookie.net/naruto/images/3/33/Naruto_Uzumaki_%28Parte_I_-_HD%29.png/revision/latest?cb=20160316113315&path-prefix=pt-br" alt="">
-                </a>
-            </div>
-            <div class="col-sm">
-                <a href="">
-                    <img class="img-fluid" src="https://static.wikia.nocookie.net/naruto/images/3/33/Naruto_Uzumaki_%28Parte_I_-_HD%29.png/revision/latest?cb=20160316113315&path-prefix=pt-br" alt="">
-                </a>
-            </div>
+        <div class="row mt-2 mx-4">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">código</th>
+                    <th scope="col">nome</th>
+                    <th scope="col">descrição</th>
+                    <th scope="col">qtd. estoque</th>
+                    <th scope="col">preço</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    @foreach ($materials as $material)
+                        <tr>
+                            <th scope="row">{{ $material->id }}</th>
+                            <td>{{ $material->name }}</td>
+                            <td>{{ $material->description }}</td>
+                            <td>{{ $material->qty }}</td>
+                            <td>{{ $material->price }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+              </table>
         </div>
     </div>
 
@@ -91,15 +91,34 @@
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Adicionar um novo material</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-            ...
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput">Nome</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                    <label for="floatingPassword">Marca</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <textarea class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                    <label for="floatingTextarea2">Descrição do material...</label>
+                </div>
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput">Quantidade</label>
+                </div>
+                <div class="form-floating">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <label for="floatingInput">Preço</label>
+                </div>
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Cancelar</button>
+            <button type="button" class="btn btn-warning text-white">Adicionar</button>
             </div>
         </div>
         </div>
