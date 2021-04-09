@@ -60,8 +60,11 @@ class MaterialController extends Controller
      * @param  \App\Models\Material  $material
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Material $material)
+    public function destroy($id)
     {
-        //
+        Material::destroy($id);
+        return redirect()->route('home', [
+            'materials' => Material::all()
+        ]);
     }
 }

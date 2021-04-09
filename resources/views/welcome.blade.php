@@ -87,7 +87,7 @@
 </style>
 <body>
     <!-- Adicionar novo material -->
-    <button type="button" style="z-index: 1" class="fixed_button rounded-circle" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    <button type="button" style="z-index: 1" class="fixed_button rounded-circle" data-bs-toggle="modal" data-bs-target="#newModal">
         <img class="img-fluid" src="{{ asset('img/add.svg') }}" alt="ADD">
     </button>
 
@@ -139,10 +139,7 @@
                             </td>
                             <td class="text-center">R$ @php echo number_format($material->price, 2) @endphp</td>
                             <td class="text-center">
-                                <button class="btn btn-sm btn-primary">
-                                    Editar
-                                </button>
-                                <button class="btn btn-sm btn-danger">
+                                <button onclick="set_material_id(@php echo $material->id @endphp)" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#removeModal">
                                     Excluir
                                 </button>
                             </td>
@@ -161,6 +158,8 @@
                 @foreach ($materials as $material)
                 <div class="card mb-2">
                     <div class="card-header">
+                        {{-- Chamar o modal de delete --}}
+                        <button onclick="set_material_id(@php echo $material->id @endphp)" type="button" class="btn-close" aria-label="Close" data-bs-toggle="modal" style="position: absolute; right: 5px" data-bs-target="#removeModal"></button>
                         @if ($material->created_at >= date('Y-m-d')) <div class="badge bg-info">novidade!</div>@endif
                         @if ($material->qty >= 50)
                         <div class="badge bg-success">
@@ -204,12 +203,12 @@
         </h6>
     </footer>
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <!-- Modal Novo -->
+    <div class="modal fade" id="newModal" tabindex="-1" aria-labelledby="newModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Adicionar um novo material</h5>
+                    <h5 class="modal-title" id="newModalLabel">Adicionar um novo material</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="api/material" method="post">
@@ -232,7 +231,7 @@
                             <label for="floatingQty">Quantidade do material no estoque</label>
                         </div>
                         <div class="form-floating">
-                            <input required type="text" class="form-control" placeholder="placeholder" id="floatingPrice" name="price">
+                            <input required type="number" class="form-control" placeholder="placeholder" id="floatingPrice" name="price" step=".01" min="0">
                             <label for="floatingPrice">Preço unitário do material</label>
                         </div>
                     </div>
@@ -245,6 +244,37 @@
         </div>
     </div>
 
+    <!-- Modal Remover -->
+    <div class="modal fade" id="removeModal" tabindex="-1" aria-labelledby="removeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="removeModalLabel">Tem certeza que deseja remover este material?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="text-muted">
+                        Está é uma ação irreversível!
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary text-white" data-bs-dismiss="modal">Cancelar</button>
+                    <form id="remove_material" action="api/material/15" method="POST">
+                        @method('delete')
+                        <button class="btn btn-danger" type="submit">Sim</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
 </body>
+<script>
+
+    function set_material_id(id) {
+        document.getElementById('remove_material').action = "api/material/" + id;
+    }
+
+</script>
 </html>
