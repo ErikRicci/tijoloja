@@ -16,6 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome', [
-        'materials' => Material::all()
+        'materials' => Material::orderByDesc('created_at')->get()
     ]);
 })->name('home');
